@@ -1,11 +1,12 @@
 import "./App.css"
 
 export default function App() {
+
   return(
     <div className="calculator-grid">
       <div className="output">
-        <div className="previous-operand">123, 234 *</div>
-        <div className="current-operand">123, 234</div>
+        <div className="previous-operand">123 *</div>
+        <div className="current-operand">125</div>
       </div>
       <button className="span-two">AC</button>
       <button>DEL</button>
