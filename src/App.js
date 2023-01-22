@@ -32,6 +32,13 @@ function reducer( state, { type, payload }) {
       if (state.currentOperand == null && state.previousOperand == null)
         return state
 
+      if (state.currentOperand == null) {
+        return {
+          ...state,
+          operation: payload.operation
+        }
+      }
+
       if (state.previousOperand == null) {
         return {
           ...state,
@@ -46,6 +53,22 @@ function reducer( state, { type, payload }) {
         previousOperand: evaluate(state),
         operation: payload.operation,
         currentOperand: null
+      }
+
+    case ACTIONS.EVALUATE:
+      if (
+        state.operation == null ||
+        state.currentOperand == null || 
+        state.previousOperand == null)
+      {
+        return state
+      }
+
+      return {
+        ...state,
+        previousOperand: null,
+        operation: null,
+        currentOperand: evaluate(state)
       }
   }
 }
@@ -107,7 +130,7 @@ export default function App() {
       <OperationButton operation="-" dispatch={dispatch}/>
       <DigitButton digit="." dispatch={dispatch}/>
       <DigitButton dispatch={dispatch} digit="0"/>
-      <button className="span-two">=</button>
+      <button className="span-two" onClick={() => dispatch({type: ACTIONS.EVALUATE})}>=</button>
     </div>
   );
 }
